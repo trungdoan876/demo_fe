@@ -1,0 +1,11 @@
+---
+alwaysApply: true
+---
+### Quy tắc: Test và ghi log kết quả
+
+- Sau khi hoàn thành task hoặc build, phải thực hiện bước test theo checklist/kịch bản đã định nghĩa.
+- Nếu thực hiện lại test, phải ghi lại log.
+- Ưu tiên viết script để test; mô tả rõ ràng tiêu chí Done (Pass/Fail) cho từng bước.
+- Ghi log test vào thư mục `/reports/`.
+- Định dạng tên file log: `<ten_task>.md` (khoảng trắng → `_`).
+

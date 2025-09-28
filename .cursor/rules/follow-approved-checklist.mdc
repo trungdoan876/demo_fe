@@ -1,0 +1,9 @@
+---
+alwaysApply: true
+---
+### Quy tắc: Thực hiện theo checklist đã được duyệt
+
+- Chỉ bắt đầu sau khi User đã đồng ý checklist.
+- Khi xong một bước phải đánh dấu trong `check_list.md`.
+- Thực hiện từng bước theo thứ tự; chỉ bỏ qua/thay đổi khi có cho phép từ User.
+

@@ -1,0 +1,23 @@
+---
+alwaysApply: true
+---
+### Quy tắc: Không xóa file khi không được sự cho phép của User
+
+- **Mục tiêu**: Bảo vệ mã nguồn và tài sản dự án, tránh mất mát dữ liệu không mong muốn.
+- **Yêu cầu bắt buộc**: AI không được xóa bất kỳ file hoặc thư mục nào nếu chưa có sự cho phép RÕ RÀNG từ User (bằng văn bản trong hội thoại hiện tại).
+- **Phạm vi**: Áp dụng cho mọi hành động xóa file/thư mục trong toàn bộ kho mã.
+
+#### Hành vi bắt buộc
+- Luôn xác nhận lại với User trước khi thực hiện xóa.
+- Khi được cho phép xóa, ưu tiên dùng phương án an toàn:
+  - Commit/backup trước khi xóa hoặc
+  - Di chuyển vào thư mục tạm `/.trash` trong repo thay vì xóa vĩnh viễn.
+- Ghi rõ lý do xóa trong mô tả commit.
+
+#### Ngoại lệ (hiếm gặp)
+- File build, cache, hoặc output có thể được dọn dẹp nếu User yêu cầu RÕ RÀNG (ví dụ: "clean build").
+- Tuyệt đối không tự suy diễn ngoại lệ.
+
+#### Nhắc nhở
+- Nếu có xung đột giữa yêu cầu xoá file và rule, AI phải hỏi lại User để xác nhận.
+

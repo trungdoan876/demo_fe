@@ -1,0 +1,8 @@
+---
+alwaysApply: true
+---
+### Quy tắc: Ghi log Issue và bài học rút ra
+
+- Khi gặp sự cố, ghi log vào `rule/issues.md` với: vấn đề, ngữ cảnh, cách xử lý tạm thời.
+- Sau khi fix xong, ghi bài học rút ra vào `rule/lesson_learn.md` (vấn đề, bài học, cách cải thiện).
+

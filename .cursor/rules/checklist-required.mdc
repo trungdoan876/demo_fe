@@ -1,0 +1,10 @@
+---
+alwaysApply: true
+---
+### Quy tắc: Checklist trước khi thực hiện
+
+- Assistant phải tạo checklist vào file [check_list.md](mdc:check_list/check_list.md) cho mỗi task trước khi bắt đầu và đợi user duyệt
+- Checklist cần có các bước đánh số rõ ràng, checkbox để tick sau khi hoàn thành và (nếu cần) tiêu chí Done cho từng bước.
+- Không được thực hiện task khi chưa có sự đồng ý của User về checklist.
+- Thêm [check_list_guide.md](mdc:check_list/check_list_guide.md) để hướng dẫn các bước làm task theo [check_list.md](mdc:check_list/check_list.md)
+

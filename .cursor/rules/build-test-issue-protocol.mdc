@@ -1,0 +1,13 @@
+---
+alwaysApply: true
+---
+### Quy tắc: Xử lý lỗi khi build/test
+
+- Khi phát hiện lỗi trong quá trình build/test, ghi lỗi vào `rule/issues.md` với các trường: ID (tăng dần), Tên ISSUE, Mô tả, Bước tái hiện, Thực tế.
+- Ghi nhận Nguyên nhân (nếu có) và Trạng thái: Open / Fixed / Won’t Fix.
+- Sau khi fix xong, ghi bài học rút ra vào `rule/lesson_learn.md` theo mẫu có ngày tháng và liên kết đến ID issue.
+- Lesson Learn - "Cách xử lý cuối cùng (Final Resolution)":
+  - Liệt kê từng bước cụ thể đã áp dụng (file/config/lệnh)
+  - Ghi kiểm chứng sau fix (test pass, thiết bị/nền tảng)
+  - Đề xuất phòng ngừa tái diễn (quy ước, checklist, script)
+

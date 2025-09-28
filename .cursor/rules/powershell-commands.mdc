@@ -1,0 +1,9 @@
+---
+alwaysApply: true
+---
+### Quy tắc: Chạy lệnh trong PowerShell
+
+- Khi cài đặt dependency hoặc chạy lệnh trong PowerShell:
+  - Không dùng toán tử `&&`.
+  - Chạy từng lệnh riêng biệt, trong đúng thư mục hiện tại.
+
