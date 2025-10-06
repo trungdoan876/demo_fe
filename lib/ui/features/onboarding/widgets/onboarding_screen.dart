@@ -1,7 +1,7 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'login_screen.dart';
+import '../../auth/widgets/login_screen.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -44,7 +44,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with SingleTickerPr
             return SingleChildScrollView(
               padding: screenPadding,
               child: ConstrainedBox(
-                constraints: BoxConstraints(minHeight: constraints.maxHeight - screenPadding.vertical),
+                constraints: BoxConstraints(minHeight: math.max(0, constraints.maxHeight - screenPadding.vertical)),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,

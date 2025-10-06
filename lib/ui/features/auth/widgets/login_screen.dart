@@ -1,9 +1,9 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../services/auth_service.dart';
+import '../../../../data/services/auth_service.dart';
 import 'register_screen.dart';
-import 'survey_question_screen.dart';
+import '../../survey/widgets/survey_question_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key, this.authService});
@@ -47,7 +47,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
     }
     setState(() => _isLoading = true);
     try {
-      await _authService.login(usernameOrEmail: email, password: password);
+      await _authService.login(email, password);
       if (!mounted) return;
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (_) => const SurveyFlowRemoteScreen(appTitle: 'Wello')),

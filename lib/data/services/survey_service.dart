@@ -4,29 +4,47 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'api_client.dart';
 
+//các api về survey
 class SurveyService {
   SurveyService({ApiClient? apiClient}) : _api = apiClient ?? ApiClient();
   final ApiClient _api;
 
-  Future<List<QuestionModel>> getActiveQuestions() async {
-    final token = await _getToken();
-    final res = await _api.getJson('/api/surveys/questions/active', headers: _bearer(token));
-    final List<dynamic> list = res is Map<String, dynamic> ? (res['data'] as List<dynamic>? ?? []) : (res as List<dynamic>);
-    return list.map((e) => QuestionModel.fromJson(e as Map<String, dynamic>)).toList();
+  Future<List<Map<String, dynamic>>?> getSurveyQuestions() async {
+    try {
+      final token = await _getToken();
+      final res = await _api.getJson('/api/surveys/questions/active', headers: _bearer(token));
+      if (res is List) {
+        return res.cast<Map<String, dynamic>>();
+      } else if (res is Map<String, dynamic> && res['data'] is List) {
+        return (res['data'] as List).cast<Map<String, dynamic>>();
+      }
+      return null;
+    } catch (e) {
+      return null;
+    }
   }
 
-  Future<void> submitAnswers(List<AnswerItem> answers) async {
-    final payload = {
-      'answers': answers.map((e) => {'questionId': e.questionId, 'optionId': e.optionId}).toList()
-    };
-    final token = await _getToken();
-    await _api.postJson('/api/surveys/answers', body: payload, headers: _bearer(token));
+  Future<bool?> submitSurveyAnswers(List<Map<String, dynamic>> answers) async {
+    try {
+      final payload = {
+        'answers': answers,
+      };
+      final token = await _getToken();
+      await _api.postJson('/api/surveys/answers', body: payload, headers: _bearer(token));
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
-  Future<PlanModel> generatePlan() async {
-    final token = await _getToken();
-    final data = await _api.postJson('/api/surveys/plan/generate', headers: _bearer(token));
-    return PlanModel.fromJson(data);
+  Future<Map<String, dynamic>?> generateHealthPlan() async {
+    try {
+      final token = await _getToken();
+      final data = await _api.postJson('/api/surveys/plan/generate', headers: _bearer(token));
+      return data;
+    } catch (e) {
+      return null;
+    }
   }
 
   Map<String, String> _bearer(String? token) => token == null ? {} : {'Authorization': 'Bearer $token'};

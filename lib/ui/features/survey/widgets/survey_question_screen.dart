@@ -1,8 +1,8 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../services/survey_service.dart';
-import '../theme.dart';
+import '../../../../data/services/survey_service.dart';
+import '../../../../ui/core/themes/app_theme.dart';
 
 class SurveyQuestion {
   const SurveyQuestion({
@@ -194,7 +194,7 @@ class SurveyFlowRemoteScreen extends StatefulWidget {
 class _SurveyFlowRemoteScreenState extends State<SurveyFlowRemoteScreen> with SingleTickerProviderStateMixin {
   final SurveyService _service = SurveyService();
   bool _loading = true;
-  List<QuestionModel> _questions = const [];
+  List<Map<String, dynamic>> _questions = [];
   final Map<int, int> _answers = {};
   int _index = 0;
   late final AnimationController _floatCtrl;
@@ -214,9 +214,9 @@ class _SurveyFlowRemoteScreenState extends State<SurveyFlowRemoteScreen> with Si
 
   Future<void> _load() async {
     try {
-      final qs = await _service.getActiveQuestions();
+      final qs = await _service.getSurveyQuestions();
       setState(() {
-        _questions = qs;
+        _questions = qs ?? [];
         _loading = false;
       });
     } catch (e) {
@@ -228,12 +228,12 @@ class _SurveyFlowRemoteScreenState extends State<SurveyFlowRemoteScreen> with Si
 
   Future<void> _submit() async {
     try {
-      await _service.submitAnswers(
-        _answers.entries.map((e) => AnswerItem(questionId: e.key, optionId: e.value)).toList(),
+      await _service.submitSurveyAnswers(
+        _answers.entries.map((e) => {'questionId': e.key, 'optionId': e.value}).toList(),
       );
-      final plan = await _service.generatePlan();
+      final plan = await _service.generateHealthPlan();
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Plan: ${plan.goal}')));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Plan: ${plan?['goal'] ?? 'Generated'}')));
       Navigator.of(context).maybePop();
     } catch (e) {
       if (!mounted) return;
@@ -297,14 +297,14 @@ class _SurveyFlowRemoteScreenState extends State<SurveyFlowRemoteScreen> with Si
                   const SizedBox(height: 8),
                   _QuestionCard(
                     question: q,
-                    selectedOptionId: _answers[q.id],
-                    onSelect: (optId) => setState(() => _answers[q.id] = optId),
+                    selectedOptionId: _answers[q['id']],
+                    onSelect: (optId) => setState(() => _answers[q['id']] = optId),
                   ),
                   const SizedBox(height: 16),
                   SizedBox(
                     height: 48,
                     child: ElevatedButton(
-                      onPressed: _answers[q.id] == null
+                      onPressed: _answers[q['id']] == null
                           ? null
                           : () {
                               if (isLast) {
@@ -351,7 +351,7 @@ class _GradientText extends StatelessWidget {
 class _QuestionCard extends StatelessWidget {
   const _QuestionCard({required this.question, required this.selectedOptionId, required this.onSelect});
 
-  final QuestionModel question;
+  final Map<String, dynamic> question;
   final int? selectedOptionId;
   final ValueChanged<int> onSelect;
 
@@ -369,16 +369,16 @@ class _QuestionCard extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
         Text(
-          question.content,
+          question['content'] ?? question['question'] ?? '',
           textAlign: TextAlign.center,
           style: GoogleFonts.beVietnamPro(fontSize: 20, fontWeight: FontWeight.w700, height: 1.35, color: Colors.black87),
         ),
         const SizedBox(height: 16),
-        for (final o in question.options) ...[
+        for (final o in (question['options'] as List<dynamic>? ?? [])) ...[
           _OptionTile(
-            label: o.label,
-            selected: selectedOptionId == o.id,
-            onTap: () => onSelect(o.id),
+            label: o['label'] ?? '',
+            selected: selectedOptionId == o['id'],
+            onTap: () => onSelect(o['id']),
             primaryBlue: primaryBlue,
           ),
           const SizedBox(height: 12),

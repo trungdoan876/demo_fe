@@ -2,8 +2,10 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-import '../config.dart';
+import '../../config/app_config.dart';
 
+//class này là HTTP Client chung
+//service - giao tiếp với api
 class ApiClient {
   ApiClient({http.Client? httpClient}) : _client = httpClient ?? http.Client();
 
